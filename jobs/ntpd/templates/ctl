@@ -2,6 +2,8 @@
 
 RUN_DIR=/var/vcap/sys/run/ntpd
 PID_FILE=${RUN_DIR}/ntpd.pid
+DRIFT_DIR=/var/vcap/sys/log/ntp
+STAT_DIR=/var/vcap/sys/log/ntpstats
 
 case $1 in
 
@@ -15,6 +17,10 @@ case $1 in
     # Kick off ntpd
     mkdir -p $RUN_DIR
     chown -R vcap:vcap $RUN_DIR
+    mkdir -p $DRIFT_DIR
+    chown -R vcap:vcap $DRIFT_DIR
+    mkdir -p $STAT_DIR
+    chown -R vcap:vcap $STAT_DIR
 
     # ntpd is on stemcell by default
     exec /var/vcap/packages/ntp/bin/ntpd \
